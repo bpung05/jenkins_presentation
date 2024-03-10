@@ -18,7 +18,7 @@ pipeline {
         stage ("Build docker image file") {
             steps{
                 dir('C:/Pung/Baylor/Software Engineer 2/jenkins_proj/jenkins_proj'){
-                    bat "docker build -t benpung3bay/devops_proj ."
+                    bat "docker build -t benpung3bay/presentation_hub ."
                 }
             }
         }
