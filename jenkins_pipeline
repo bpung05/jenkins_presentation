@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools{
+        maven 'maven_3_9_6'
+    }
+    stages {
+        stage("MVN Test"){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/bpung05/jenkins_presentation']])
+                bat 'mvn -version'
+                bat 'mvn clean install'
+
+            }
+        }
+        stage ("Build docker image file") {
+            steps{
+                dir('C:/Pung/Baylor/Software Engineer 2/jenkins_proj/jenkins_proj'){
+                    bat "docker build -t benpung3bay/devops_proj"
+                }
+            }
+        }
+        stage ("Push our image to hub"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
+                        bat "docker login -u benpung3bay -p %dockerpassword%"
+                        bat "docker push benpung3bay/presentation_hub"
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always{
+            cleanWs()
+        }
+    }
+}
