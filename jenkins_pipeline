@@ -2,6 +2,7 @@ pipeline {
     agent any
     triggers {
         githubPush()
+        pollSCM('') 
     }
     tools{
         maven 'maven_3_9_6'
