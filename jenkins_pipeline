@@ -8,7 +8,10 @@ pipeline {
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/bpung05/jenkins_presentation']])
                 bat 'mvn -version'
-                bat 'mvn clean install'
+                dir('C:/Pung/Baylor/Software Engineer 2/jenkins_proj/jenkins_proj'){
+                   bat 'mvn clean install'
+                }
+               
 
             }
         }
